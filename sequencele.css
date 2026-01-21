@@ -116,6 +116,7 @@ h1 {
     gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
+    min-height: 70px;
 }
 
 .number-tile {
@@ -143,14 +144,33 @@ h1 {
 }
 
 .number-tile.dragging {
-    opacity: 0.5;
-    transform: scale(1.15);
+    opacity: 0.3;
 }
 
 .number-tile.used {
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Floating drag indicator */
+.drag-ghost {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.95;
 }
 
 /* Platform section */
@@ -484,6 +504,16 @@ h1 {
         font-size: 20px;
     }
 
+    .drag-ghost {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .pool-container {
+        gap: 8px;
+    }
+
     h1 {
         font-size: 24px;
     }
@@ -503,5 +533,12 @@ h1 {
 
     .instructions {
         font-size: 13px;
+    }
+}
+
+@media (max-width: 340px) {
+    .pool-container {
+        max-width: 180px;
+        margin: 0 auto;
     }
 }

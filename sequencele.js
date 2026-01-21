@@ -17,7 +17,7 @@ const today = new Date().toDateString();
 
 // Calculate day number (days since Jan 1, 2025)
 function getDayNumber() {
-    const epoch = new Date('2026-01-21');
+    const epoch = new Date('2025-01-01');
     const now = new Date();
     const diff = now - epoch;
     const dayNumber = Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
@@ -126,9 +126,9 @@ function renderPool() {
         tile.addEventListener('dragend', handleDragEnd);
 
         // Touch events for mobile
-        tile.addEventListener('touchstart', handleTouchStart, { passive: false });
-        tile.addEventListener('touchmove', handleTouchMove, { passive: false });
-        tile.addEventListener('touchend', handleTouchEnd, { passive: false });
+        tile.addEventListener('touchstart', handleTouchStart, {passive: false});
+        tile.addEventListener('touchmove', handleTouchMove, {passive: false});
+        tile.addEventListener('touchend', handleTouchEnd, {passive: false});
 
         container.appendChild(tile);
     }
@@ -250,6 +250,7 @@ function toggleHistory() {
 // TOUCH EVENTS FOR MOBILE
 let touchStartElement = null;
 let isDragging = false;
+let dragGhost = null;
 
 function handleTouchStart(e) {
     if (e.target.classList.contains('used')) {
@@ -270,8 +271,17 @@ function handleTouchStart(e) {
     draggedNumber = parseInt(e.target.dataset.number);
     isDragging = true;
 
-    // Immediate visual feedback
+    // Fade out original tile
     e.target.classList.add('dragging');
+
+    // Create floating ghost element
+    const touch = e.touches[0];
+    dragGhost = document.createElement('div');
+    dragGhost.className = 'drag-ghost';
+    dragGhost.textContent = draggedNumber;
+    dragGhost.style.left = touch.clientX + 'px';
+    dragGhost.style.top = touch.clientY + 'px';
+    document.body.appendChild(dragGhost);
 }
 
 function handleTouchMove(e) {
@@ -281,8 +291,15 @@ function handleTouchMove(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    // Get the element under the touch point
     const touch = e.touches[0];
+
+    // Move ghost element with finger
+    if (dragGhost) {
+        dragGhost.style.left = touch.clientX + 'px';
+        dragGhost.style.top = touch.clientY + 'px';
+    }
+
+    // Get the element under the touch point
     const elementAtPoint = document.elementFromPoint(touch.clientX, touch.clientY);
 
     // Remove drag-over from all slots
@@ -332,6 +349,10 @@ function handleTouchEnd(e) {
     // Clean up
     if (touchStartElement) {
         touchStartElement.classList.remove('dragging');
+    }
+    if (dragGhost) {
+        dragGhost.remove();
+        dragGhost = null;
     }
     document.querySelectorAll('.slot').forEach(slot => {
         slot.classList.remove('drag-over');
@@ -464,7 +485,7 @@ function shareResults() {
 Attempts: ${attempts}/${maxAttempts}
 Time: ${time}
 
-https://sequencele.pages.dev/`;
+(Link to play when available)`;
 
     // Copy to clipboard
     copyToClipboard(shareText);
