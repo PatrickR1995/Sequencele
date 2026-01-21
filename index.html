@@ -41,8 +41,11 @@
     <button class="submit-btn" id="submit-btn" disabled>Submit Guess</button>
 
     <div class="history" id="history-section" style="display: none;">
-        <div class="history-title">Guess History</div>
-        <div id="history-container"></div>
+        <div class="history-title" onclick="toggleHistory()">
+            <span>Guess History</span>
+            <span class="history-toggle" id="history-toggle">▼</span>
+        </div>
+        <div class="history-content" id="history-container"></div>
     </div>
 </div>
 

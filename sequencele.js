@@ -15,7 +15,7 @@ let elapsedSeconds = 0;
 // Get today's date for daily challenge
 const today = new Date().toDateString();
 
-// Calculate day number (days since Jan 21, 2026)
+// Calculate day number (days since Jan 1, 2025)
 function getDayNumber() {
     const epoch = new Date('2026-01-21');
     const now = new Date();
@@ -121,8 +121,14 @@ function renderPool() {
             tile.draggable = false;
         }
 
+        // Drag events
         tile.addEventListener('dragstart', handlePoolDragStart);
         tile.addEventListener('dragend', handleDragEnd);
+
+        // Touch events for mobile
+        tile.addEventListener('touchstart', handleTouchStart, { passive: false });
+        tile.addEventListener('touchmove', handleTouchMove, { passive: false });
+        tile.addEventListener('touchend', handleTouchEnd, { passive: false });
 
         container.appendChild(tile);
     }
@@ -180,6 +186,9 @@ function handlePoolDragStart(e) {
     // Start timer on first interaction
     startTimer();
 
+    // Lock body scroll during drag
+    document.body.classList.add('dragging');
+
     draggedNumber = parseInt(e.target.dataset.number);
     e.target.classList.add('dragging');
 }
@@ -213,12 +222,127 @@ function handleDragEnd(e) {
         slot.classList.remove('drag-over');
     });
     draggedNumber = null;
+
+    // Unlock body scroll
+    document.body.classList.remove('dragging');
 }
 
 function removeFromSlot(index) {
     platformSlots[index] = null;
     renderPool();
     renderPlatform();
+}
+
+// TOGGLE HISTORY
+function toggleHistory() {
+    const container = document.getElementById('history-container');
+    const toggle = document.getElementById('history-toggle');
+
+    if (container.style.display === 'none') {
+        container.style.display = 'block';
+        toggle.classList.remove('collapsed');
+    } else {
+        container.style.display = 'none';
+        toggle.classList.add('collapsed');
+    }
+}
+
+// TOUCH EVENTS FOR MOBILE
+let touchStartElement = null;
+let isDragging = false;
+
+function handleTouchStart(e) {
+    if (e.target.classList.contains('used')) {
+        return;
+    }
+
+    // Prevent scrolling while touching tiles
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Start timer on first interaction
+    startTimer();
+
+    // Lock body scroll immediately
+    document.body.classList.add('dragging');
+
+    touchStartElement = e.target;
+    draggedNumber = parseInt(e.target.dataset.number);
+    isDragging = true;
+
+    // Immediate visual feedback
+    e.target.classList.add('dragging');
+}
+
+function handleTouchMove(e) {
+    if (!draggedNumber || !isDragging) return;
+
+    // Prevent all scrolling during drag
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Get the element under the touch point
+    const touch = e.touches[0];
+    const elementAtPoint = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    // Remove drag-over from all slots
+    document.querySelectorAll('.slot').forEach(slot => {
+        slot.classList.remove('drag-over');
+    });
+
+    // Add drag-over to current slot if hovering
+    if (elementAtPoint) {
+        // Check if it's a slot or inside a slot
+        const slot = elementAtPoint.classList.contains('slot')
+            ? elementAtPoint
+            : elementAtPoint.closest('.slot');
+
+        if (slot) {
+            slot.classList.add('drag-over');
+        }
+    }
+}
+
+function handleTouchEnd(e) {
+    if (!draggedNumber || !isDragging) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Get the element under the last touch point
+    const touch = e.changedTouches[0];
+    const elementAtPoint = document.elementFromPoint(touch.clientX, touch.clientY);
+
+    // If dropped on a slot, place the number
+    if (elementAtPoint) {
+        const slot = elementAtPoint.classList.contains('slot')
+            ? elementAtPoint
+            : elementAtPoint.closest('.slot');
+
+        if (slot) {
+            const slotIndex = parseInt(slot.dataset.index);
+            if (!isNaN(slotIndex)) {
+                platformSlots[slotIndex] = draggedNumber;
+                renderPool();
+                renderPlatform();
+            }
+        }
+    }
+
+    // Clean up
+    if (touchStartElement) {
+        touchStartElement.classList.remove('dragging');
+    }
+    document.querySelectorAll('.slot').forEach(slot => {
+        slot.classList.remove('drag-over');
+    });
+
+    draggedNumber = null;
+    touchStartElement = null;
+    isDragging = false;
+
+    // Unlock body scroll
+    document.body.classList.remove('dragging');
 }
 
 // CALCULATE FEEDBACK

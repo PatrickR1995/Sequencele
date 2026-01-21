@@ -12,6 +12,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
+    /* Prevent pull-to-refresh and overscroll on mobile */
+    overscroll-behavior: none;
+    touch-action: pan-y;
+}
+
+body.dragging {
+    overflow: hidden;
+    touch-action: none;
 }
 
 .container {
@@ -21,6 +30,9 @@ body {
     border-radius: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     padding: 30px;
+    max-height: 95vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 h1 {
@@ -121,6 +133,9 @@ h1 {
     user-select: none;
     transition: transform 0.2s, opacity 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Make touch more responsive */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 .number-tile:active {
@@ -129,12 +144,13 @@ h1 {
 
 .number-tile.dragging {
     opacity: 0.5;
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 .number-tile.used {
     opacity: 0.3;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 /* Platform section */
@@ -174,8 +190,10 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     color: white;
-    transition: all 0.2s;
+    transition: all 0.15s;
     position: relative;
+    /* Make touch more responsive */
+    -webkit-tap-highlight-color: transparent;
 }
 
 .slot.empty {
@@ -189,9 +207,10 @@ h1 {
 }
 
 .slot.drag-over {
-    background: #e3f2fd;
-    border-color: #667eea;
-    transform: scale(1.05);
+    background: #4caf50;
+    border-color: #4caf50;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
 }
 
 .slot .remove-btn {
@@ -253,6 +272,34 @@ h1 {
     font-weight: 600;
     color: #333;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.history-title:hover {
+    background: #e9ecef;
+}
+
+.history-toggle {
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.history-toggle.collapsed {
+    transform: rotate(-180deg);
+}
+
+.history-content {
+    max-height: 300px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .history-item {
@@ -422,6 +469,10 @@ h1 {
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
     .container {
         padding: 20px;
     }
@@ -439,5 +490,18 @@ h1 {
 
     .info-value {
         font-size: 20px;
+    }
+
+    .game-info {
+        padding: 10px;
+    }
+
+    .number-pool,
+    .platform {
+        padding: 15px;
+    }
+
+    .instructions {
+        font-size: 13px;
     }
 }
