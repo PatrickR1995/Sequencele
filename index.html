@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sequencele</title>
+  <link rel="stylesheet" href="sequencele.css">
+</head>
+<body>
+<div class="container">
+  <h1>🧩 Sequencele</h1>
+  <div class="instructions">
+    Drag numbers from the pool to the platform to match the hidden sequence!
+  </div>
+
+  <div class="game-info">
+    <div class="info-item">
+      <div class="info-label">Attempts</div>
+      <div class="info-value" id="attempts">0/12</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Timer</div>
+      <div class="info-value timer" id="timer">00:00</div>
+    </div>
+    <div class="info-item">
+      <div class="info-label">Best</div>
+      <div class="info-value" id="best-score">0/5</div>
+    </div>
+  </div>
+
+  <div class="number-pool">
+    <div class="pool-label">Available Numbers</div>
+    <div class="pool-container" id="pool-container"></div>
+  </div>
+
+  <div class="platform">
+    <div class="platform-label">Your Guess (Drag Here)</div>
+    <div class="platform-slots" id="platform-slots"></div>
+  </div>
+
+  <button class="submit-btn" id="submit-btn" disabled>Submit Guess</button>
+
+  <div class="history" id="history-section" style="display: none;">
+    <div class="history-title">Guess History</div>
+    <div id="history-container"></div>
+  </div>
+</div>
+
+<script src="sequencele.js"></script>
+</body>
+</html>
