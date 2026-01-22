@@ -127,6 +127,13 @@
     border-color: var(--tile-color);
 }
 
+.slot.filled.color-theme.color-1 { --tile-color: #ef4444; } /* Red */
+.slot.filled.color-theme.color-2 { --tile-color: #22c55e; } /* Green */
+.slot.filled.color-theme.color-3 { --tile-color: #3b82f6; } /* Blue */
+.slot.filled.color-theme.color-4 { --tile-color: #eab308; } /* Yellow */
+.slot.filled.color-theme.color-5 { --tile-color: #a855f7; } /* Purple */
+
+
 .slot.drag-over {
     background: #4caf50;
     border-color: #4caf50;
