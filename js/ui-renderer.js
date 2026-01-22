@@ -238,6 +238,7 @@ class UIRenderer {
 
 Attempts: ${attempts}/${CONFIG.MAX_ATTEMPTS}
 Time: ${time}
+Difficulty: ${this.game.difficulty.charAt(0).toUpperCase() + this.game.difficulty.slice(1)}
 
 ${CONFIG.SHARE_URL}`;
 
