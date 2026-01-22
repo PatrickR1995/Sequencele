@@ -4,13 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sequencele</title>
-    <link rel="stylesheet" href="sequencele.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/modals.css">
 </head>
 <body>
-<div class="container">
-    <h1>🧩 Sequencele</h1>
+<div class="container" id="game-container">
+    <div class="header-row">
+        <h1>🧩 Sequencele</h1>
+        <div class="header-buttons">
+            <button class="icon-btn" id="stats-btn" title="Statistics">📊</button>
+            <div class="settings-container">
+                <button class="icon-btn" id="settings-btn" title="Settings">⚙️</button>
+                <div class="settings-dropdown" id="settings-dropdown">
+                    <div class="settings-section">
+                        <div class="settings-title">Difficulty</div>
+                        <div class="theme-option" data-difficulty="easy">
+                            <input type="radio" name="difficulty" id="difficulty-easy">
+                            <label for="difficulty-easy">Easy</label>
+                        </div>
+                        <div class="theme-option" data-difficulty="normal">
+                            <input type="radio" name="difficulty" id="difficulty-normal" checked>
+                            <label for="difficulty-normal">Normal</label>
+                        </div>
+                        <div class="theme-option" data-difficulty="hard">
+                            <input type="radio" name="difficulty" id="difficulty-hard">
+                            <label for="difficulty-hard">Hard</label>
+                        </div>
+                    </div>
+                    <div class="settings-divider"></div>
+                    <div class="settings-section">
+                        <div class="settings-title">Theme</div>
+                        <div class="theme-option" data-theme="number">
+                            <input type="radio" name="theme" id="theme-number" checked>
+                            <label for="theme-number">Numbers</label>
+                        </div>
+                        <div class="theme-option" data-theme="color">
+                            <input type="radio" name="theme" id="theme-color">
+                            <label for="theme-color">Colors</label>
+                        </div>
+                        <div class="theme-option" data-theme="brainrot">
+                            <input type="radio" name="theme" id="theme-brainrot">
+                            <label for="theme-brainrot">Brainrot 🧠</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="instructions">
-        Drag numbers from the pool to the platform to match the hidden sequence!
+        Drag items from the pool to the platform to match the hidden sequence!
     </div>
 
     <div class="game-info">
@@ -29,7 +73,7 @@
     </div>
 
     <div class="number-pool">
-        <div class="pool-label">Available Numbers</div>
+        <div class="pool-label">Available Items</div>
         <div class="pool-container" id="pool-container"></div>
     </div>
 
@@ -41,14 +85,74 @@
     <button class="submit-btn" id="submit-btn" disabled>Submit Guess</button>
 
     <div class="history" id="history-section" style="display: none;">
-        <div class="history-title" onclick="toggleHistory()">
+        <div class="history-title" id="history-toggle">
             <span>Guess History</span>
-            <span class="history-toggle" id="history-toggle">▼</span>
+            <span class="history-toggle-icon">▼</span>
         </div>
         <div class="history-content" id="history-container"></div>
     </div>
 </div>
 
-<script src="sequencele.js"></script>
+<!-- Splash Screen -->
+<div class="splash-screen" id="splash-screen">
+    <div class="splash-content">
+        <h1 class="splash-title">🧩 Sequencele</h1>
+        <div class="splash-instructions">
+            <h2>How to Play</h2>
+            <p>🎯 Find the hidden sequence of 5 items</p>
+            <p>🔄 Drag items from the pool to the platform</p>
+            <p>📊 Get feedback after each guess</p>
+            <p>⏱️ Beat your best time!</p>
+            <p class="splash-note">New puzzle every day • 12 attempts</p>
+        </div>
+        <button class="play-btn" id="play-btn">Play</button>
+    </div>
+</div>
+
+<!-- Statistics Modal -->
+<div class="modal-overlay" id="stats-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Statistics</h2>
+            <button class="close-btn" id="close-stats">×</button>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number" id="stat-played">0</div>
+                <div class="stat-label">Played</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="stat-winrate">0</div>
+                <div class="stat-label">Win %</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="stat-current">0</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number" id="stat-max">0</div>
+                <div class="stat-label">Max Streak</div>
+            </div>
+        </div>
+        <div class="guess-distribution">
+            <h3>Guess Distribution</h3>
+            <div id="distribution-bars"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Game Over Modal Container -->
+<div id="game-over-modal-container"></div>
+
+<!-- Scripts -->
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/sequence-generator.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/ui-renderer.js"></script>
+<script src="js/drag-handler.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,191 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    touch-action: pan-y;
+}
+
+body.dragging {
+    overflow: hidden;
+    touch-action: none;
+}
+
+.container {
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    max-height: 95vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.header-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.header-buttons {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn:hover {
+    background: #f0f0f0;
+}
+
+.instructions {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Game Info */
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.info-item {
+    text-align: center;
+}
+
+.info-label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #667eea;
+    margin-top: 5px;
+}
+
+.timer {
+    font-family: 'Courier New', monospace;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .info-value {
+        font-size: 20px;
+    }
+
+    .game-info {
+        padding: 10px;
+    }
+
+    .instructions {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 340px) {
+    .pool-container {
+        max-width: 180px;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,340 @@
+/* Number Pool */
+.number-pool {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.pool-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pool-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 70px;
+}
+
+/* Tiles */
+.number-tile {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s, opacity 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.number-tile:active {
+    cursor: grabbing;
+}
+
+.number-tile.dragging {
+    opacity: 0.3;
+}
+
+.number-tile.used {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Color Theme Tiles */
+.number-tile.color-theme {
+    background: var(--tile-color);
+}
+
+.number-tile.color-theme.color-1 { --tile-color: #ef4444; } /* Red */
+.number-tile.color-theme.color-2 { --tile-color: #22c55e; } /* Green */
+.number-tile.color-theme.color-3 { --tile-color: #3b82f6; } /* Blue */
+.number-tile.color-theme.color-4 { --tile-color: #eab308; } /* Yellow */
+.number-tile.color-theme.color-5 { --tile-color: #a855f7; } /* Purple */
+
+/* Platform */
+.platform {
+    background: #fff;
+    padding: 20px;
+    border: 3px dashed #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.platform-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.platform-slots {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Slots */
+.slot {
+    width: 60px;
+    height: 60px;
+    background: #f8f9fa;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.15s;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slot.empty {
+    color: #ccc;
+}
+
+.slot.filled {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 2px solid #667eea;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.slot.filled.color-theme {
+    background: var(--tile-color);
+    border-color: var(--tile-color);
+}
+
+.slot.drag-over {
+    background: #4caf50;
+    border-color: #4caf50;
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+}
+
+.slot .remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    background: #f44336;
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+.slot.filled:hover .remove-btn {
+    display: flex;
+}
+
+/* Drag Ghost */
+.drag-ghost {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.95;
+}
+
+.drag-ghost.color-theme {
+    background: var(--tile-color);
+}
+
+/* History */
+.history {
+    margin-top: 30px;
+}
+
+.history-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.history-title:hover {
+    background: #e9ecef;
+}
+
+.history-toggle-icon {
+    font-size: 20px;
+    transition: transform 0.3s;
+}
+
+.history-toggle-icon.collapsed {
+    transform: rotate(-180deg);
+}
+
+.history-content {
+    max-height: 300px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.history-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    animation: slideIn 0.3s ease-out;
+    text-align: center;
+}
+
+.attempt-number {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.feedback-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.feedback-correct {
+    color: #4caf50;
+}
+
+/* Settings */
+.settings-container {
+    position: relative;
+}
+
+.settings-dropdown {
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    min-width: 180px;
+    display: none;
+    z-index: 100;
+}
+
+.settings-dropdown.show {
+    display: block;
+}
+
+.settings-section {
+    margin-bottom: 15px;
+}
+
+.settings-section:last-child {
+    margin-bottom: 0;
+}
+
+.settings-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 15px 0;
+}
+
+.settings-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.theme-option {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+    margin-bottom: 5px;
+}
+
+.theme-option:hover {
+    background: #f8f9fa;
+}
+
+.theme-option input[type="radio"] {
+    cursor: pointer;
+}
+
+.theme-option label {
+    cursor: pointer;
+    user-select: none;
+    flex: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+    .number-tile,
+    .slot {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .drag-ghost {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .pool-container {
+        gap: 8px;
+    }
+
+    .number-pool,
+    .platform {
+        padding: 15px;
+    }
+}
