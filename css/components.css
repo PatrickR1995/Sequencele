@@ -311,6 +311,93 @@
     flex: 1;
 }
 
+/* When theme uses images: show only the image without the surrounding box */
+body.theme-images .number-tile {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+body.theme-images .number-tile .tile-image {
+    display: block;
+    width: auto;
+    height: 64px; /* uniform height for pool images */
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+body.theme-images .slot {
+    background: transparent;
+    border: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+    box-shadow: none;
+}
+
+body.theme-images .slot.empty {
+    width: 60px;
+    height: 60px;
+    background: #f8f9fa;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.15s;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body.theme-images .slot .tile-image {
+    display: block;
+    width: auto;
+    height: 64px; /* uniform height for platform images */
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* Ensure drag ghost scales appropriately when images are used */
+body.theme-images .drag-ghost {
+    background: transparent;
+    box-shadow: none;
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+body.theme-images .drag-ghost img,
+body.theme-images .drag-ghost .tile-image {
+    height: 64px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* History tiles: make sure history images also have a consistent size */
+body.theme-images .history-item div > div img,
+body.theme-images .history-item div > div .tile-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    body.theme-images .number-tile .tile-image,
+    body.theme-images .slot .tile-image,
+    body.theme-images .drag-ghost img,
+    body.theme-images .drag-ghost .tile-image {
+        height: 54px;
+    }
+}
+
 /* Mobile Responsive */
 @media (max-width: 480px) {
     .number-tile,
@@ -333,5 +420,35 @@
     .number-pool,
     .platform {
         padding: 15px;
+    }
+}
+
+/* Ensure at very narrow widths the pool shows 3 columns so 5 items become rows of 3 and 2 */
+@media (max-width: 370px) {
+    .pool-container {
+        /* Use a centered flexbox constrained to 3 items per row so partial second row is centered */
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        /* Limit the container width to exactly fit 3 items + gaps so rows center properly */
+        max-width: calc(3 * 52px + 2 * 8px);
+        margin: 0 auto;
+    }
+
+    /* Slightly smaller tiles to fit comfortably */
+    .number-tile,
+    .slot {
+        width: 52px;
+        height: 52px;
+        font-size: 18px;
+    }
+
+    /* When images are used, adjust image heights to match new tile size */
+    body.theme-images .number-tile .tile-image,
+    body.theme-images .slot .tile-image,
+    body.theme-images .drag-ghost img,
+    body.theme-images .drag-ghost .tile-image {
+        height: 48px;
     }
 }

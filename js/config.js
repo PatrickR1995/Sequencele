@@ -25,7 +25,7 @@ const CONFIG = {
         },
         brainrot: {
             name: 'Brainrot',
-            items: ['img1.png', 'img2.png', 'img3.png', 'img4.png', 'img5.png'], // Placeholder image names
+            items: ['thung.png', 'croc.png', 'ballerina.png', 'toilet.png', 'cup.png'], // Use actual filenames from images/
             useColorClass: false,
             useImages: true
         }

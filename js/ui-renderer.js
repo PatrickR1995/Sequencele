@@ -11,6 +11,25 @@ class UIRenderer {
 
     setTheme(theme) {
         this.currentTheme = theme;
+
+        // Preload images if the theme uses images to reduce flicker
+        const themeConfig = CONFIG.THEMES[this.currentTheme];
+        if (themeConfig && themeConfig.useImages) {
+            this.preloadImages(themeConfig.items.map(i => `images/${i}`));
+        }
+
+        // Add a body-level class so CSS can switch tile/slot appearance when using images
+        if (typeof document !== 'undefined' && document.body) {
+            document.body.classList.toggle('theme-images', !!(themeConfig && themeConfig.useImages));
+        }
+    }
+
+    // Helper to preload images
+    preloadImages(urls) {
+        urls.forEach(url => {
+            const img = new Image();
+            img.src = url;
+        });
     }
 
     renderPool() {
@@ -186,7 +205,7 @@ class UIRenderer {
             feedbackText.innerHTML = `
                 <div class="attempt-number">Attempt ${item.attempt}</div>
                 <div class="feedback-text">
-                    <span class="feedback-correct">${item.correctCount}</span> correct
+                    <span class="feedback-correct">${item.correctCount}</span> in the right spot
                 </div>
             `;
 
