@@ -15,12 +15,6 @@ body {
     align-items: center;
     overflow-x: hidden;
     overscroll-behavior: none;
-    touch-action: pan-y;
-}
-
-body.dragging {
-    overflow: hidden;
-    touch-action: none;
 }
 
 .container {

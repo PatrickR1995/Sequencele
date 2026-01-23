@@ -13,18 +13,21 @@ const CONFIG = {
         number: {
             name: 'Numbers',
             items: ['1', '2', '3', '4', '5'],
-            useColorClass: false
+            useColorClass: false,
+            useImages: false
         },
         color: {
             name: 'Colors',
             items: ['', '', '', '', ''], // Empty strings, colors come from CSS
             useColorClass: true,
-            colors: ['#ef4444', '#22c55e', '#3b82f6', '#eab308', '#a855f7']
+            colors: ['#ef4444', '#22c55e', '#3b82f6', '#eab308', '#a855f7'],
+            useImages: false
         },
         brainrot: {
             name: 'Brainrot',
-            items: ['🤡', '💀', '🔥', '💯', '🧠'],
-            useColorClass: false
+            items: ['img1.png', 'img2.png', 'img3.png', 'img4.png', 'img5.png'], // Placeholder image names
+            useColorClass: false,
+            useImages: true
         }
     },
 

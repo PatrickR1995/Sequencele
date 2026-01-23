@@ -36,26 +36,41 @@
     justify-content: center;
     font-size: 24px;
     font-weight: bold;
-    cursor: grab;
+    cursor: pointer;
     user-select: none;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none;
 }
 
-.number-tile:active {
-    cursor: grabbing;
+.number-tile:hover:not(.used) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-.number-tile.dragging {
-    opacity: 0.3;
+.number-tile:active:not(.used) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .number-tile.used {
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;
+}
+
+/* Image support for brainrot theme */
+.tile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.image-placeholder {
+    font-size: 20px;
+    color: white;
 }
 
 /* Color Theme Tiles */
@@ -120,46 +135,21 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border: 2px solid #667eea;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.slot.filled:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.slot.filled:active {
+    transform: scale(0.95);
 }
 
 .slot.filled.color-theme {
     background: var(--tile-color);
     border-color: var(--tile-color);
-}
-
-.slot.filled.color-theme.color-1 { --tile-color: #ef4444; } /* Red */
-.slot.filled.color-theme.color-2 { --tile-color: #22c55e; } /* Green */
-.slot.filled.color-theme.color-3 { --tile-color: #3b82f6; } /* Blue */
-.slot.filled.color-theme.color-4 { --tile-color: #eab308; } /* Yellow */
-.slot.filled.color-theme.color-5 { --tile-color: #a855f7; } /* Purple */
-
-
-.slot.drag-over {
-    background: #4caf50;
-    border-color: #4caf50;
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
-}
-
-.slot .remove-btn {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 20px;
-    height: 20px;
-    background: #f44336;
-    color: white;
-    border-radius: 50%;
-    font-size: 14px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid white;
-}
-
-.slot.filled:hover .remove-btn {
-    display: flex;
 }
 
 /* Drag Ghost */

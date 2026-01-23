@@ -25,7 +25,6 @@ class UIRenderer {
             // Check if number is already used
             if (this.game.platformSlots.includes(i)) {
                 tile.classList.add('used');
-                tile.draggable = false;
             }
 
             container.appendChild(tile);
@@ -35,11 +34,25 @@ class UIRenderer {
     createTile(number, themeConfig) {
         const tile = document.createElement('div');
         tile.className = 'number-tile';
-        tile.draggable = true;
         tile.dataset.number = number;
 
         if (themeConfig.useColorClass) {
             tile.classList.add('color-theme', `color-${number}`);
+        } else if (themeConfig.useImages) {
+            // Create image element for brainrot theme
+            const img = document.createElement('img');
+            img.src = `images/${themeConfig.items[number - 1]}`;
+            img.alt = `Item ${number}`;
+            img.className = 'tile-image';
+            img.onerror = function() {
+                // Fallback if image not found - show placeholder
+                this.style.display = 'none';
+                const placeholder = document.createElement('div');
+                placeholder.className = 'image-placeholder';
+                placeholder.textContent = number;
+                this.parentElement.appendChild(placeholder);
+            };
+            tile.appendChild(img);
         } else {
             tile.textContent = themeConfig.items[number - 1];
         }
@@ -64,21 +77,31 @@ class UIRenderer {
             } else {
                 slot.classList.add('filled');
 
+                // Make entire slot clickable to remove
+                slot.style.cursor = 'pointer';
+                slot.onclick = () => {
+                    this.game.removeFromSlot(index);
+                };
+
                 if (themeConfig.useColorClass) {
                     slot.classList.add('color-theme', `color-${value}`);
+                } else if (themeConfig.useImages) {
+                    // Add image for brainrot theme
+                    const img = document.createElement('img');
+                    img.src = `images/${themeConfig.items[value - 1]}`;
+                    img.alt = `Item ${value}`;
+                    img.className = 'tile-image';
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                        const placeholder = document.createElement('div');
+                        placeholder.className = 'image-placeholder';
+                        placeholder.textContent = value;
+                        this.parentElement.appendChild(placeholder);
+                    };
+                    slot.appendChild(img);
                 } else {
                     slot.textContent = themeConfig.items[value - 1];
                 }
-
-                // Add remove button
-                const removeBtn = document.createElement('div');
-                removeBtn.className = 'remove-btn';
-                removeBtn.textContent = '×';
-                removeBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    this.game.removeFromSlot(index);
-                };
-                slot.appendChild(removeBtn);
             }
 
             container.appendChild(slot);
@@ -126,6 +149,24 @@ class UIRenderer {
                         numTile.style.background = '#4caf50';
                     } else {
                         numTile.style.background = themeConfig.colors[num - 1];
+                    }
+                } else if (themeConfig.useImages) {
+                    // Add image for brainrot theme
+                    const img = document.createElement('img');
+                    img.src = `images/${themeConfig.items[num - 1]}`;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'contain';
+                    img.onerror = function() {
+                        this.style.display = 'none';
+                        numTile.textContent = num;
+                    };
+                    numTile.appendChild(img);
+
+                    if (isCorrect) {
+                        numTile.style.background = '#4caf50';
+                    } else {
+                        numTile.style.background = '#ddd';
                     }
                 } else {
                     numTile.textContent = themeConfig.items[num - 1];
@@ -238,7 +279,6 @@ class UIRenderer {
 
 Attempts: ${attempts}/${CONFIG.MAX_ATTEMPTS}
 Time: ${time}
-Difficulty: ${this.game.difficulty.charAt(0).toUpperCase() + this.game.difficulty.slice(1)}
 
 ${CONFIG.SHARE_URL}`;
 

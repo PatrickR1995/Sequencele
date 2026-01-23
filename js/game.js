@@ -16,18 +16,18 @@ class Game {
 
         this.timer = new TimerManager();
         this.uiRenderer = new UIRenderer(this);
-        this.dragHandler = new DragHandler(this, this.uiRenderer);
+        this.clickHandler = new ClickHandler(this, this.uiRenderer);
         this.statistics = new StatisticsManager();
 
         this.init();
     }
 
     init() {
+        // Load saved settings first
+        this.loadSavedSettings();
+
         // Generate sequence for current difficulty
         this.hiddenSequence = SequenceGenerator.generateSequence(this.difficulty);
-
-        // Set theme
-        this.uiRenderer.setTheme(this.theme);
 
         // Try to load saved game state for this difficulty
         const savedState = StorageManager.loadGameState(this.difficulty);
@@ -157,7 +157,7 @@ class Game {
             this.loadState(savedState);
         }
 
-        // Update UI
+        // Update UI - set radio button
         StorageManager.saveDifficulty(newDifficulty);
         document.getElementById(`difficulty-${newDifficulty}`).checked = true;
 
@@ -177,6 +177,23 @@ class Game {
         StorageManager.saveTheme(newTheme);
         document.getElementById(`theme-${newTheme}`).checked = true;
         this.render();
+    }
+
+    loadSavedSettings() {
+        // Load and apply saved difficulty
+        const savedDifficulty = StorageManager.loadDifficulty();
+        if (savedDifficulty) {
+            this.difficulty = savedDifficulty;
+            document.getElementById(`difficulty-${savedDifficulty}`).checked = true;
+        }
+
+        // Load and apply saved theme
+        const savedTheme = StorageManager.loadTheme();
+        if (savedTheme) {
+            this.theme = savedTheme;
+            this.uiRenderer.setTheme(savedTheme);
+            document.getElementById(`theme-${savedTheme}`).checked = true;
+        }
     }
 
     toggleHistory() {
