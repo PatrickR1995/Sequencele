@@ -331,7 +331,7 @@
 }
 
 .instruction-item i {
-    font-size: 36px;
+    font-size: 20px;
     color: #667eea;
     flex-shrink: 0;
     margin-top: 2px;
@@ -388,5 +388,43 @@
 
     .splash-content {
         padding: 30px 20px;
+        /* make the content area scrollable and constrained so the Play button is reachable */
+        max-height: calc(100svh - 80px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+        box-sizing: border-box;
+        width: min(95%, 500px);
+
+        /* Center the card inside the scrollable overlay */
+        margin: auto;
+    }
+
+    /* Make the full-screen overlay allow scrolling so content can move into view */
+    .splash-screen {
+        /* keep centering behavior even on mobile */
+        align-items: center;
+        justify-content: center;
+
+        /* allow scroll only when needed */
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 24px 16px;
+        box-sizing: border-box;
+    }
+
+    /* Ensure content doesn't hug the top when taller than the viewport */
+    .splash-screen::before,
+    .splash-screen::after {
+        content: "";
+        display: block;
+        height: 0;
+        flex: 0 0 auto;
+    }
+
+    /* Ensure the play button isn't pushed offscreen and is easily tappable */
+    .play-btn {
+        width: auto;
+        padding: 14px 36px;
+        font-size: 18px;
     }
 }

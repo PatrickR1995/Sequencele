@@ -33,11 +33,15 @@ body.dark-mode {
     --shadow-light: rgba(0, 0, 0, 0.3);
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 0; /* removed global padding so flex centering is precise */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,6 +61,7 @@ body {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     transition: background 0.3s ease, box-shadow 0.3s ease;
+    margin: 20px; /* keep breathing room while remaining centered */
 }
 
 /* Header */
