@@ -1,0 +1,378 @@
+/* Brainrot Mode Styles - Maximum Chaos 💀🔥 */
+
+/* Brainrot mode active */
+body.brainrot-mode {
+    animation: brainrot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes brainrot-pulse {
+    0%, 100% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(30deg); }
+}
+
+/* Rainbow border rotation */
+@keyframes rainbow-rotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* Floating emojis */
+.floating-emojis-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.floating-emoji {
+    position: absolute;
+    animation: float-up linear;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Screen shake */
+@keyframes shake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    10% { transform: translate(-10px, -5px) rotate(-2deg); }
+    20% { transform: translate(10px, 5px) rotate(2deg); }
+    30% { transform: translate(-10px, 5px) rotate(-2deg); }
+    40% { transform: translate(10px, -5px) rotate(2deg); }
+    50% { transform: translate(-10px, -5px) rotate(-2deg); }
+    60% { transform: translate(10px, 5px) rotate(2deg); }
+    70% { transform: translate(-10px, 5px) rotate(-2deg); }
+    80% { transform: translate(10px, -5px) rotate(2deg); }
+    90% { transform: translate(-10px, -5px) rotate(-2deg); }
+}
+
+/* Screen flash */
+.screen-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+    animation: flash 0.1s;
+}
+
+@keyframes flash {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.5; }
+}
+
+/* Vine boom effect */
+.vine-boom-effect {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 100px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: boom 0.5s ease-out;
+}
+
+@keyframes boom {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(2) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Meme text overlays */
+.meme-text {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    font-weight: 900;
+    text-transform: uppercase;
+    pointer-events: none;
+    z-index: 9998;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    text-shadow:
+            -2px -2px 0 #000,
+            2px -2px 0 #000,
+            -2px 2px 0 #000,
+            2px 2px 0 #000,
+            0 0 10px #000;
+    animation: meme-appear 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.meme-text.fade-out {
+    animation: meme-disappear 0.5s ease-out forwards;
+}
+
+.meme-click { color: #FFBE0B; }
+.meme-correct { color: #00ff00; }
+.meme-wrong { color: #ff0000; }
+.meme-win {
+    color: #ffd700;
+    font-size: 80px;
+}
+.meme-lose { color: #ff0000; }
+
+@keyframes meme-appear {
+    0% {
+        transform: translateX(-50%) scale(0) rotate(-10deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes meme-disappear {
+    0% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Particles */
+.particle {
+    position: fixed;
+    font-size: 30px;
+    pointer-events: none;
+    z-index: 9997;
+    animation: particle-explode 1s ease-out forwards;
+}
+
+@keyframes particle-explode {
+    0% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) rotate(720deg) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -50px;
+    font-size: 30px;
+    pointer-events: none;
+    z-index: 9996;
+    animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Glitch effect */
+.glitch-effect {
+    animation: glitch 0.3s;
+}
+
+@keyframes glitch {
+    0%, 100% {
+        transform: translate(0);
+        filter: none;
+    }
+    20% {
+        transform: translate(-5px, 2px);
+        filter: hue-rotate(90deg);
+    }
+    40% {
+        transform: translate(5px, -2px);
+        filter: hue-rotate(180deg);
+    }
+    60% {
+        transform: translate(-3px, 5px);
+        filter: hue-rotate(270deg);
+    }
+    80% {
+        transform: translate(3px, -5px);
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Brainrot mode tiles - NO BOXES, just images! */
+body.brainrot-mode .number-tile {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    animation: tile-float 2s ease-in-out infinite;
+}
+
+body.brainrot-mode .number-tile:hover:not(.used) {
+    animation: tile-bounce 0.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px #FF006E) drop-shadow(0 0 30px #8338EC);
+}
+
+@keyframes tile-float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+@keyframes tile-bounce {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.2) rotate(10deg);
+    }
+}
+
+/* Brainrot mode slots - NO BOXES */
+body.brainrot-mode .slot {
+    background: transparent !important;
+    border: 3px dashed rgba(255, 0, 110, 0.5) !important;
+    animation: slot-pulse 1.5s ease-in-out infinite;
+}
+
+body.brainrot-mode .slot.filled {
+    border: 3px solid #FF006E !important;
+    background: transparent !important;
+    animation: slot-glow 1s ease-in-out infinite;
+}
+
+@keyframes slot-pulse {
+    0%, 100% {
+        border-color: rgba(255, 0, 110, 0.5);
+        box-shadow: 0 0 10px rgba(255, 0, 110, 0.3);
+    }
+    50% {
+        border-color: rgba(131, 56, 236, 0.8);
+        box-shadow: 0 0 20px rgba(131, 56, 236, 0.5);
+    }
+}
+
+@keyframes slot-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px #FF006E, 0 0 40px #8338EC;
+    }
+    50% {
+        box-shadow: 0 0 30px #FF006E, 0 0 60px #8338EC;
+    }
+}
+
+/* Brainrot mode platform */
+body.brainrot-mode .platform {
+    background: transparent !important;
+    border: 4px dashed rgba(255, 190, 11, 0.6) !important;
+    animation: platform-rainbow 3s linear infinite;
+}
+
+@keyframes platform-rainbow {
+    0% { border-color: #FF006E; }
+    25% { border-color: #8338EC; }
+    50% { border-color: #3A86FF; }
+    75% { border-color: #FB5607; }
+    100% { border-color: #FF006E; }
+}
+
+/* Brainrot mode submit button */
+body.brainrot-mode .submit-btn {
+    background: linear-gradient(45deg, #FF006E, #8338EC, #3A86FF, #FB5607, #FFBE0B);
+    background-size: 200% 200%;
+    animation: submit-rainbow 2s linear infinite;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@keyframes submit-rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body.brainrot-mode .submit-btn:hover:not(:disabled) {
+    animation: submit-rainbow 2s linear infinite, submit-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes submit-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(131, 56, 236, 0.8);
+    }
+}
+
+/* Tile images in brainrot mode - FULL SIZE, NO BOXES */
+body.brainrot-mode .tile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 110, 0.6));
+}
+
+body.brainrot-mode .number-tile:hover .tile-image {
+    filter: drop-shadow(0 0 20px #FF006E) drop-shadow(0 0 30px #8338EC);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .meme-text {
+        font-size: 40px;
+    }
+
+    .meme-text.meme-win {
+        font-size: 50px;
+    }
+
+    .floating-emoji {
+        font-size: 25px;
+    }
+
+    .vine-boom-effect {
+        font-size: 60px;
+    }
+}

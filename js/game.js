@@ -26,6 +26,11 @@ class Game {
         // Load saved settings first
         this.loadSavedSettings();
 
+        // Activate brainrot effects if theme is brainrot
+        if (this.theme === 'brainrot' && window.brainrotEffects) {
+            window.brainrotEffects.activate();
+        }
+
         // Generate sequence for current difficulty
         this.hiddenSequence = SequenceGenerator.generateSequence(this.difficulty);
 
@@ -81,6 +86,20 @@ class Game {
             guess: [...this.platformSlots]
         });
 
+        // Brainrot effects
+        if (window.brainrotEffects && window.brainrotEffects.isActive) {
+            if (correctCount === CONFIG.SEQUENCE_LENGTH) {
+                // Perfect guess!
+                window.brainrotEffects.onCorrectGuess();
+            } else if (correctCount === 0) {
+                // No correct
+                window.brainrotEffects.onWrongGuess();
+            } else if (this.difficulty === 'hard') {
+                // Hard mode vine boom
+                window.brainrotEffects.playVineBoom();
+            }
+        }
+
         // Show feedback message for hard mode
         if (this.difficulty === 'hard') {
             const feedbackEl = document.getElementById('feedback-message');
@@ -128,6 +147,15 @@ class Game {
         this.gameOver = true;
         this.timer.stop();
         document.getElementById('submit-btn').disabled = true;
+
+        // Brainrot effects
+        if (window.brainrotEffects && window.brainrotEffects.isActive) {
+            if (won) {
+                window.brainrotEffects.onWin();
+            } else {
+                window.brainrotEffects.onLose();
+            }
+        }
 
         // Update statistics
         const dayNumber = SequenceGenerator.getDayNumber();
@@ -191,6 +219,16 @@ class Game {
         this.uiRenderer.setTheme(newTheme);
         StorageManager.saveTheme(newTheme);
         document.getElementById('theme-toggle').checked = (newTheme === 'brainrot');
+
+        // Activate/deactivate brainrot effects
+        if (window.brainrotEffects) {
+            if (newTheme === 'brainrot') {
+                window.brainrotEffects.activate();
+            } else {
+                window.brainrotEffects.deactivate();
+            }
+        }
+
         this.render();
     }
 

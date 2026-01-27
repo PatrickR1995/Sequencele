@@ -28,6 +28,12 @@ class ClickHandler {
         this.game.startTimer();
 
         const number = parseInt(tile.dataset.number);
+
+        // Brainrot effects
+        if (window.brainrotEffects && window.brainrotEffects.isActive) {
+            window.brainrotEffects.onTileClick(e, number);
+        }
+
         this.placeInFirstAvailableSlot(number);
     }
 
@@ -42,6 +48,14 @@ class ClickHandler {
         this.game.startTimer();
 
         const number = parseInt(tile.dataset.number);
+
+        // Brainrot effects
+        if (window.brainrotEffects && window.brainrotEffects.isActive) {
+            const touch = e.changedTouches[0];
+            const fakeEvent = { clientX: touch.clientX, clientY: touch.clientY };
+            window.brainrotEffects.onTileClick(fakeEvent, number);
+        }
+
         this.placeInFirstAvailableSlot(number);
     }
 
