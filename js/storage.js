@@ -8,7 +8,8 @@ class StorageManager {
         THEME: 'sequencele-theme',
         DIFFICULTY: 'sequencele-difficulty',
         STATS: 'sequencele-stats',
-        GAME_STATE: 'sequencele-game-state'
+        GAME_STATE: 'sequencele-game-state',
+        DARK_MODE: 'sequencele-dark-mode'
     };
 
     static saveTheme(theme) {
@@ -25,6 +26,19 @@ class StorageManager {
 
     static loadDifficulty() {
         return localStorage.getItem(this.KEYS.DIFFICULTY) || 'normal';
+    }
+
+    static saveDarkMode(isDark) {
+        localStorage.setItem(this.KEYS.DARK_MODE, isDark ? 'true' : 'false');
+    }
+
+    static loadDarkMode() {
+        const saved = localStorage.getItem(this.KEYS.DARK_MODE);
+        // Return false as default if nothing saved
+        if (saved === null || saved === undefined) {
+            return false;
+        }
+        return saved === 'true';
     }
 
     static saveStats(stats) {

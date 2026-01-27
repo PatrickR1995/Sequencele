@@ -88,21 +88,23 @@
 
 /* Platform */
 .platform {
-    background: #fff;
+    background: var(--container-bg);
     padding: 20px;
-    border: 3px dashed #ddd;
+    border: 3px dashed var(--border-color);
     border-radius: 10px;
     margin-bottom: 20px;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .platform-label {
     font-size: 12px;
     font-weight: 600;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 10px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 }
 
 .platform-slots {
@@ -115,8 +117,8 @@
 .slot {
     width: 60px;
     height: 60px;
-    background: #f8f9fa;
-    border: 2px dashed #ddd;
+    background: var(--info-bg);
+    border: 2px dashed var(--border-color);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -130,7 +132,7 @@
 }
 
 .slot.empty {
-    color: #ccc;
+    color: var(--text-tertiary);
 }
 
 .slot.filled {
@@ -433,4 +435,18 @@
 
 .toggle-switch input:checked + .toggle-slider .toggle-label-right {
     opacity: 1;
+}
+
+/* Settings label with icon */
+.settings-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.settings-label i {
+    width: 16px;
+    text-align: center;
+    color: #667eea;
 }
