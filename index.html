@@ -7,87 +7,100 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/modals.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 <div class="container" id="game-container">
     <div class="header-row">
-        <h1>🧩 Sequencele</h1>
+        <h1 class="game-title">Sequencele</h1>
         <div class="header-buttons">
-            <button class="icon-btn" id="stats-btn" title="Statistics">📊</button>
+            <button class="icon-btn" id="stats-btn" title="Statistics">
+                <i class="fas fa-chart-bar"></i>
+            </button>
             <div class="settings-container">
-                <button class="icon-btn" id="settings-btn" title="Settings">⚙️</button>
+                <button class="icon-btn" id="settings-btn" title="Settings">
+                    <i class="fas fa-cog"></i>
+                </button>
                 <div class="settings-dropdown" id="settings-dropdown">
                     <div class="settings-section">
-                        <div class="settings-title">Difficulty</div>
-                        <div class="theme-option" data-difficulty="easy">
-                            <input type="radio" name="difficulty" id="difficulty-easy">
-                            <label for="difficulty-easy">Easy</label>
-                        </div>
-                        <div class="theme-option" data-difficulty="normal">
-                            <input type="radio" name="difficulty" id="difficulty-normal" checked>
-                            <label for="difficulty-normal">Normal</label>
-                        </div>
-                        <div class="theme-option" data-difficulty="hard">
-                            <input type="radio" name="difficulty" id="difficulty-hard">
-                            <label for="difficulty-hard">Hard</label>
+                        <div class="settings-item">
+                                <span class="settings-label">
+                                    <i class="fas fa-moon"></i> Dark Mode
+                                </span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
                     <div class="settings-divider"></div>
                     <div class="settings-section">
-                        <div class="settings-title">Theme</div>
-                        <div class="theme-option" data-theme="number">
-                            <input type="radio" name="theme" id="theme-number" checked>
-                            <label for="theme-number">Numbers</label>
+                        <div class="settings-item">
+                                <span class="settings-label">
+                                    <i class="fas fa-palette"></i> Brainrot Theme
+                                </span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="theme-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
-                        <div class="theme-option" data-theme="color">
-                            <input type="radio" name="theme" id="theme-color">
-                            <label for="theme-color">Colors</label>
-                        </div>
-                        <div class="theme-option" data-theme="brainrot">
-                            <input type="radio" name="theme" id="theme-brainrot">
-                            <label for="theme-brainrot">Brainrot 🧠</label>
+                    </div>
+                    <div class="settings-divider"></div>
+                    <div class="settings-section">
+                        <div class="settings-item">
+                                <span class="settings-label">
+                                    <i class="fas fa-fire"></i> Hard Mode
+                                </span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="difficulty-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="instructions">
-        Select items from the pool to the platform to match the hidden sequence!
+        <i class="fas fa-info-circle"></i> Click numbers to fill slots, then submit your guess!
     </div>
 
     <div class="game-info">
         <div class="info-item">
-            <div class="info-label">Attempts</div>
+            <div class="info-label"><i class="fas fa-crosshairs"></i> Attempts</div>
             <div class="info-value" id="attempts">0/12</div>
         </div>
         <div class="info-item">
-            <div class="info-label">Timer</div>
+            <div class="info-label"><i class="fas fa-clock"></i> Timer</div>
             <div class="info-value timer" id="timer">00:00</div>
         </div>
         <div class="info-item">
-            <div class="info-label">Best</div>
+            <div class="info-label"><i class="fas fa-trophy"></i> Best</div>
             <div class="info-value" id="best-score">0/5</div>
         </div>
     </div>
 
     <div class="number-pool">
-        <div class="pool-label">Available Items</div>
+        <div class="pool-label"><i class="fas fa-cube"></i> Available Items</div>
         <div class="pool-container" id="pool-container"></div>
     </div>
 
     <div class="platform">
-        <div class="platform-label">Your Guess</div>
+        <div class="platform-label"><i class="fas fa-hand-pointer"></i> Your Guess (Click to Place)</div>
         <div class="platform-slots" id="platform-slots"></div>
     </div>
 
-    <button class="submit-btn" id="submit-btn" disabled>Submit Guess</button>
+    <button class="submit-btn" id="submit-btn" disabled>
+        <i class="fas fa-paper-plane"></i> Submit Guess
+    </button>
+
+    <div class="feedback-message" id="feedback-message"></div>
 
     <div class="history" id="history-section" style="display: none;">
         <div class="history-title" id="history-toggle">
-            <span>Guess History</span>
-            <span class="history-toggle-icon">▼</span>
+            <span><i class="fas fa-history"></i> Guess History</span>
+            <span class="history-toggle-icon"><i class="fas fa-chevron-down"></i></span>
         </div>
         <div class="history-content" id="history-container"></div>
     </div>
@@ -96,16 +109,37 @@
 <!-- Splash Screen -->
 <div class="splash-screen" id="splash-screen">
     <div class="splash-content">
-        <h1 class="splash-title">🧩 Sequencele</h1>
+        <div class="splash-header">
+            <i class="fas fa-puzzle-piece splash-icon"></i>
+            <h1 class="splash-title">Sequencele</h1>
+        </div>
         <div class="splash-instructions">
             <h2>How to Play</h2>
-            <p>🎯 Find the hidden sequence of 5 items</p>
-            <p>🔄 Select items from the pool to the platform</p>
-            <p>📊 Get feedback after each guess</p>
-            <p>⏱️ Beat your best time!</p>
-            <p class="splash-note">New puzzle every day • 12 attempts</p>
+            <div class="instruction-grid">
+                <div class="instruction-item">
+                    <i class="fas fa-bullseye"></i>
+                    <p>Find the hidden sequence of 5 items</p>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-hand-pointer"></i>
+                    <p>Click items to place them in order</p>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Get feedback after each guess</p>
+                </div>
+                <div class="instruction-item">
+                    <i class="fas fa-stopwatch"></i>
+                    <p>Beat your best time!</p>
+                </div>
+            </div>
+            <p class="splash-note">
+                <i class="fas fa-calendar-day"></i> New puzzle every day • 12 attempts
+            </p>
         </div>
-        <button class="play-btn" id="play-btn">Play</button>
+        <button class="play-btn" id="play-btn">
+            <i class="fas fa-play"></i> Start Playing
+        </button>
     </div>
 </div>
 
@@ -113,8 +147,10 @@
 <div class="modal-overlay" id="stats-modal" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
-            <h2>Statistics</h2>
-            <button class="close-btn" id="close-stats">×</button>
+            <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+            <button class="close-btn" id="close-stats">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="stats-grid">
             <div class="stat-box">

@@ -5,9 +5,37 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Light mode (default) */
+    --bg-gradient-1: #667eea;
+    --bg-gradient-2: #764ba2;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --text-secondary: #666666;
+    --text-tertiary: #999999;
+    --info-bg: #f8f9fa;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-light: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    /* Dark mode */
+    --bg-gradient-1: #1a1a2e;
+    --bg-gradient-2: #16213e;
+    --container-bg: #0f1419;
+    --text-color: #e4e6eb;
+    --text-secondary: #b0b3b8;
+    --text-tertiary: #8a8d91;
+    --info-bg: #1c1e26;
+    --border-color: #2d2f36;
+    --shadow: rgba(0, 0, 0, 0.6);
+    --shadow-light: rgba(0, 0, 0, 0.3);
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
     min-height: 100vh;
     padding: 20px;
     display: flex;
@@ -15,65 +43,82 @@ body {
     align-items: center;
     overflow-x: hidden;
     overscroll-behavior: none;
+    transition: background 0.3s ease;
 }
 
 .container {
     max-width: 500px;
     width: 100%;
-    background: white;
+    background: var(--container-bg);
     border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px var(--shadow);
     padding: 30px;
     max-height: 95vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Header */
-h1 {
+.game-title {
     text-align: center;
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 28px;
+    color: var(--text-color);
+    margin: 0;
+    font-size: clamp(20px, 6vw, 28px); /* Responsive size */
+    font-weight: 700;
+    transition: color 0.3s ease;
+    flex: 1;
+    padding: 0 60px; /* Space for buttons on sides */
 }
 
 .header-row {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     position: relative;
     margin-bottom: 10px;
+    gap: 10px;
 }
 
 .header-buttons {
-    position: absolute;
-    right: 0;
-    top: 0;
     display: flex;
-    gap: 10px;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 .icon-btn {
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
     border-radius: 8px;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.2s;
     -webkit-tap-highlight-color: transparent;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
 }
 
 .icon-btn:hover {
-    background: #f0f0f0;
+    background: var(--info-bg);
+    transform: scale(1.05);
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
 }
 
 .instructions {
     text-align: center;
-    color: #666;
+    color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 20px;
     line-height: 1.6;
+    transition: color 0.3s ease;
 }
 
 /* Game Info */
@@ -82,8 +127,9 @@ h1 {
     justify-content: space-between;
     margin-bottom: 20px;
     padding: 15px;
-    background: #f8f9fa;
+    background: var(--info-bg);
     border-radius: 10px;
+    transition: background 0.3s ease;
 }
 
 .info-item {
@@ -92,9 +138,10 @@ h1 {
 
 .info-label {
     font-size: 12px;
-    color: #666;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 }
 
 .info-value {
@@ -120,7 +167,7 @@ h1 {
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--shadow-light);
 }
 
 .submit-btn:hover:not(:disabled) {
@@ -157,11 +204,23 @@ h1 {
     }
 
     .container {
-        padding: 20px;
+        padding: 20px 15px;
     }
 
-    h1 {
-        font-size: 24px;
+    .game-title {
+        font-size: clamp(18px, 5vw, 22px);
+        padding: 0 50px;
+    }
+
+    .header-buttons {
+        gap: 5px;
+    }
+
+    .icon-btn {
+        font-size: 18px;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
     }
 
     .info-value {
@@ -181,5 +240,9 @@ h1 {
     .pool-container {
         max-width: 180px;
         margin: 0 auto;
+    }
+
+    .game-title {
+        padding: 0 45px;
     }
 }

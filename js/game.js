@@ -81,6 +81,18 @@ class Game {
             guess: [...this.platformSlots]
         });
 
+        // Show feedback message for hard mode
+        if (this.difficulty === 'hard') {
+            const feedbackEl = document.getElementById('feedback-message');
+            feedbackEl.textContent = `${correctCount} correct`;
+            feedbackEl.classList.add('show');
+
+            // Auto-hide after 2 seconds
+            setTimeout(() => {
+                feedbackEl.classList.remove('show');
+            }, 2000);
+        }
+
         // Check win condition
         if (correctCount === CONFIG.SEQUENCE_LENGTH) {
             this.endGame(true);
@@ -151,15 +163,18 @@ class Game {
         this.gameOver = false;
         this.timer.reset();
 
+        // Clear feedback message
+        document.getElementById('feedback-message').textContent = '';
+
         // Try to load saved state for new difficulty
         const savedState = StorageManager.loadGameState(newDifficulty);
         if (savedState && savedState.dayNumber === SequenceGenerator.getDayNumber()) {
             this.loadState(savedState);
         }
 
-        // Update UI - set radio button
+        // Update UI - set toggle
         StorageManager.saveDifficulty(newDifficulty);
-        document.getElementById(`difficulty-${newDifficulty}`).checked = true;
+        document.getElementById('difficulty-toggle').checked = (newDifficulty === 'hard');
 
         // Handle history visibility
         if (newDifficulty === 'hard') {
@@ -175,7 +190,7 @@ class Game {
         this.theme = newTheme;
         this.uiRenderer.setTheme(newTheme);
         StorageManager.saveTheme(newTheme);
-        document.getElementById(`theme-${newTheme}`).checked = true;
+        document.getElementById('theme-toggle').checked = (newTheme === 'brainrot');
         this.render();
     }
 
@@ -184,7 +199,7 @@ class Game {
         const savedDifficulty = StorageManager.loadDifficulty();
         if (savedDifficulty) {
             this.difficulty = savedDifficulty;
-            document.getElementById(`difficulty-${savedDifficulty}`).checked = true;
+            document.getElementById('difficulty-toggle').checked = (savedDifficulty === 'hard');
         }
 
         // Load and apply saved theme
@@ -192,7 +207,7 @@ class Game {
         if (savedTheme) {
             this.theme = savedTheme;
             this.uiRenderer.setTheme(savedTheme);
-            document.getElementById(`theme-${savedTheme}`).checked = true;
+            document.getElementById('theme-toggle').checked = (savedTheme === 'brainrot');
         }
     }
 

@@ -11,25 +11,6 @@ class UIRenderer {
 
     setTheme(theme) {
         this.currentTheme = theme;
-
-        // Preload images if the theme uses images to reduce flicker
-        const themeConfig = CONFIG.THEMES[this.currentTheme];
-        if (themeConfig && themeConfig.useImages) {
-            this.preloadImages(themeConfig.items.map(i => `images/${i}`));
-        }
-
-        // Add a body-level class so CSS can switch tile/slot appearance when using images
-        if (typeof document !== 'undefined' && document.body) {
-            document.body.classList.toggle('theme-images', !!(themeConfig && themeConfig.useImages));
-        }
-    }
-
-    // Helper to preload images
-    preloadImages(urls) {
-        urls.forEach(url => {
-            const img = new Image();
-            img.src = url;
-        });
     }
 
     renderPool() {
@@ -205,7 +186,7 @@ class UIRenderer {
             feedbackText.innerHTML = `
                 <div class="attempt-number">Attempt ${item.attempt}</div>
                 <div class="feedback-text">
-                    <span class="feedback-correct">${item.correctCount}</span> in the right spot
+                    <span class="feedback-correct">${item.correctCount}</span> correct
                 </div>
             `;
 
@@ -254,31 +235,36 @@ class UIRenderer {
             CONFIG.THEMES[this.currentTheme].items[num - 1]
         ).join(' ');
 
+        const winIcon = '<i class="fas fa-trophy"></i>';
+        const loseIcon = '<i class="fas fa-times-circle"></i>';
+
         modal.innerHTML = `
             <div class="modal-content">
                 <div class="game-over">
                     <div class="game-over-title ${won ? 'win' : 'lose'}">
-                        ${won ? '🎉 You Won!' : '😔 Game Over'}
+                        ${won ? winIcon + ' You Won!' : loseIcon + ' Game Over'}
                     </div>
                     <div class="game-over-stats">
                         <div class="stat-row">
-                            <span class="stat-label">Attempts:</span>
+                            <span class="stat-label"><i class="fas fa-crosshairs"></i> Attempts:</span>
                             <span class="stat-value">${attempts}/${CONFIG.MAX_ATTEMPTS}</span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Time:</span>
+                            <span class="stat-label"><i class="fas fa-clock"></i> Time:</span>
                             <span class="stat-value">${time}</span>
                         </div>
                         <div class="stat-row">
-                            <span class="stat-label">Date:</span>
+                            <span class="stat-label"><i class="fas fa-calendar-day"></i> Date:</span>
                             <span class="stat-value">${SequenceGenerator.getTodayString()}</span>
                         </div>
                         ${!won ? `<div class="stat-row">
-                            <span class="stat-label">Answer:</span>
+                            <span class="stat-label"><i class="fas fa-key"></i> Answer:</span>
                             <span class="stat-value">${sequenceDisplay}</span>
                         </div>` : ''}
                     </div>
-                    <button class="share-btn" id="share-results-btn">📤 Share Results</button>
+                    <button class="share-btn" id="share-results-btn">
+                        <i class="fas fa-share-alt"></i> Share Results
+                    </button>
                 </div>
             </div>
         `;

@@ -7,6 +7,19 @@ let game;
 
 // Initialize game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Check if StorageManager is loaded
+    if (typeof StorageManager === 'undefined') {
+        console.error('StorageManager not loaded! Check script order.');
+        return;
+    }
+
+    // Apply saved dark mode (default is false/light mode)
+    const isDark = StorageManager.loadDarkMode ? StorageManager.loadDarkMode() : false;
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+    }
+    document.getElementById('dark-mode-toggle').checked = isDark;
+
     // Close splash screen
     document.getElementById('play-btn').addEventListener('click', () => {
         document.getElementById('splash-screen').style.display = 'none';
@@ -29,24 +42,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Theme options
-    document.querySelectorAll('[data-theme]').forEach(option => {
-        option.addEventListener('click', (e) => {
-            const theme = e.currentTarget.dataset.theme;
-            if (game) {
-                game.changeTheme(theme);
-            }
-        });
+    // Dark mode toggle
+    document.getElementById('dark-mode-toggle').addEventListener('change', (e) => {
+        const isDark = e.target.checked;
+        document.body.classList.toggle('dark-mode', isDark);
+        if (StorageManager.saveDarkMode) {
+            StorageManager.saveDarkMode(isDark);
+        }
     });
 
-    // Difficulty options
-    document.querySelectorAll('[data-difficulty]').forEach(option => {
-        option.addEventListener('click', (e) => {
-            const difficulty = e.currentTarget.dataset.difficulty;
-            if (game) {
-                game.changeDifficulty(difficulty);
-            }
-        });
+    // Theme toggle (Numbers=OFF/Brainrot=ON)
+    document.getElementById('theme-toggle').addEventListener('change', (e) => {
+        const theme = e.target.checked ? 'brainrot' : 'number';
+        if (game) {
+            game.changeTheme(theme);
+        }
+    });
+
+    // Difficulty toggle (Normal=OFF/Hard=ON)
+    document.getElementById('difficulty-toggle').addEventListener('change', (e) => {
+        const difficulty = e.target.checked ? 'hard' : 'normal';
+        if (game) {
+            game.changeDifficulty(difficulty);
+        }
     });
 
     // Statistics button

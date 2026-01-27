@@ -1,19 +1,21 @@
 /* Number Pool */
 .number-pool {
-    background: #f8f9fa;
+    background: var(--info-bg);
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+    transition: background 0.3s ease;
 }
 
 .pool-label {
     font-size: 12px;
     font-weight: 600;
-    color: #666;
+    color: var(--text-secondary);
     margin-bottom: 10px;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    transition: color 0.3s ease;
 }
 
 .pool-container {
@@ -184,7 +186,7 @@
 .history-title {
     font-size: 16px;
     font-weight: 600;
-    color: #333;
+    color: var(--text-color);
     margin-bottom: 15px;
     display: flex;
     align-items: center;
@@ -192,13 +194,13 @@
     cursor: pointer;
     user-select: none;
     padding: 10px;
-    background: #f8f9fa;
+    background: var(--info-bg);
     border-radius: 10px;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.3s ease;
 }
 
 .history-title:hover {
-    background: #e9ecef;
+    background: var(--border-color);
 }
 
 .history-toggle-icon {
@@ -217,24 +219,27 @@
 }
 
 .history-item {
-    background: #f8f9fa;
+    background: var(--info-bg);
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 10px;
     animation: slideIn 0.3s ease-out;
     text-align: center;
+    transition: background 0.3s ease;
 }
 
 .attempt-number {
     font-size: 12px;
-    color: #999;
+    color: var(--text-tertiary);
     margin-bottom: 8px;
+    transition: color 0.3s ease;
 }
 
 .feedback-text {
     font-size: 18px;
     font-weight: 600;
-    color: #333;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .feedback-correct {
@@ -250,13 +255,15 @@
     position: absolute;
     right: 0;
     top: 40px;
-    background: white;
+    background: var(--container-bg);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px var(--shadow-light);
+    border: 1px solid var(--border-color);
     padding: 15px;
-    min-width: 180px;
+    min-width: 200px;
     display: none;
     z-index: 100;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .settings-dropdown.show {
@@ -273,129 +280,9 @@
 
 .settings-divider {
     height: 1px;
-    background: #e0e0e0;
+    background: var(--border-color);
     margin: 15px 0;
-}
-
-.settings-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: #666;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.theme-option {
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: background 0.2s;
-    margin-bottom: 5px;
-}
-
-.theme-option:hover {
-    background: #f8f9fa;
-}
-
-.theme-option input[type="radio"] {
-    cursor: pointer;
-}
-
-.theme-option label {
-    cursor: pointer;
-    user-select: none;
-    flex: 1;
-}
-
-/* When theme uses images: show only the image without the surrounding box */
-body.theme-images .number-tile {
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    width: auto;
-    height: auto;
-    padding: 0;
-}
-
-body.theme-images .number-tile .tile-image {
-    display: block;
-    width: auto;
-    height: 64px; /* uniform height for pool images */
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-body.theme-images .slot {
-    background: transparent;
-    border: none;
-    width: auto;
-    height: auto;
-    padding: 0;
-    box-shadow: none;
-}
-
-body.theme-images .slot.empty {
-    width: 60px;
-    height: 60px;
-    background: #f8f9fa;
-    border: 2px dashed #ddd;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    transition: all 0.15s;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body.theme-images .slot .tile-image {
-    display: block;
-    width: auto;
-    height: 64px; /* uniform height for platform images */
-    object-fit: contain;
-    border-radius: 8px;
-}
-
-/* Ensure drag ghost scales appropriately when images are used */
-body.theme-images .drag-ghost {
-    background: transparent;
-    box-shadow: none;
-    width: auto;
-    height: auto;
-    padding: 0;
-}
-
-body.theme-images .drag-ghost img,
-body.theme-images .drag-ghost .tile-image {
-    height: 64px;
-    width: auto;
-    object-fit: contain;
-}
-
-/* History tiles: make sure history images also have a consistent size */
-body.theme-images .history-item div > div img,
-body.theme-images .history-item div > div .tile-image {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 6px;
-}
-
-/* Mobile adjustments */
-@media (max-width: 480px) {
-    body.theme-images .number-tile .tile-image,
-    body.theme-images .slot .tile-image,
-    body.theme-images .drag-ghost img,
-    body.theme-images .drag-ghost .tile-image {
-        height: 54px;
-    }
+    transition: background 0.3s ease;
 }
 
 /* Mobile Responsive */
@@ -423,32 +310,127 @@ body.theme-images .history-item div > div .tile-image {
     }
 }
 
-/* Ensure at very narrow widths the pool shows 3 columns so 5 items become rows of 3 and 2 */
-@media (max-width: 370px) {
-    .pool-container {
-        /* Use a centered flexbox constrained to 3 items per row so partial second row is centered */
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-        /* Limit the container width to exactly fit 3 items + gaps so rows center properly */
-        max-width: calc(3 * 52px + 2 * 8px);
-        margin: 0 auto;
-    }
+/* Feedback Message (for hard mode) */
+.feedback-message {
+    text-align: center;
+    margin: 15px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: var(--info-bg);
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 16px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
 
-    /* Slightly smaller tiles to fit comfortably */
-    .number-tile,
-    .slot {
-        width: 52px;
-        height: 52px;
-        font-size: 18px;
-    }
+.feedback-message:empty {
+    display: none;
+}
 
-    /* When images are used, adjust image heights to match new tile size */
-    body.theme-images .number-tile .tile-image,
-    body.theme-images .slot .tile-image,
-    body.theme-images .drag-ghost img,
-    body.theme-images .drag-ghost .tile-image {
-        height: 48px;
+.feedback-message.show {
+    animation: slideInFeedback 0.3s ease-out;
+}
+
+@keyframes slideInFeedback {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Settings Toggles */
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.settings-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: #667eea;
+}
+
+.toggle-switch input:checked + .toggle-slider:before {
+    transform: translateX(30px);
+}
+
+/* Toggle with labels */
+.toggle-slider .toggle-label-left,
+.toggle-slider .toggle-label-right {
+    position: absolute;
+    font-size: 10px;
+    font-weight: 600;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.toggle-label-left {
+    left: 6px;
+}
+
+.toggle-label-right {
+    right: 6px;
+    opacity: 0.5;
+}
+
+.toggle-switch input:checked + .toggle-slider .toggle-label-left {
+    opacity: 0.5;
+}
+
+.toggle-switch input:checked + .toggle-slider .toggle-label-right {
+    opacity: 1;
 }
