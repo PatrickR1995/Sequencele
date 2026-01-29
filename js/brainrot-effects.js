@@ -44,7 +44,37 @@ class BrainrotEffects {
         const emojis = document.querySelectorAll('.floating-emoji');
         emojis.forEach(e => e.remove());
 
+        // Remove the floating emoji container
+        const emojiContainer = document.getElementById('floating-emojis');
+        if (emojiContainer) emojiContainer.remove();
+
+        // Remove all brainrot effect elements
+        document.querySelectorAll('.screen-flash').forEach(el => el.remove());
+        document.querySelectorAll('.vine-boom-effect').forEach(el => el.remove());
+        document.querySelectorAll('.meme-text').forEach(el => el.remove());
+        document.querySelectorAll('.particle').forEach(el => el.remove());
+        document.querySelectorAll('.confetti').forEach(el => el.remove());
+
+        // Remove glitch effect classes from all elements
+        document.querySelectorAll('.glitch-effect').forEach(el => {
+            el.classList.remove('glitch-effect');
+        });
+
+        // Reset container inline styles
+        const container = document.querySelector('.container');
+        if (container) {
+            container.style.border = '';
+            container.style.borderImage = '';
+            container.style.animation = '';
+        }
+
+        // Remove body filter effects and animations
+        document.body.style.filter = '';
+        document.body.style.animation = '';
+
+        // Remove all brainrot-related classes
         document.body.classList.remove('brainrot-pulse');
+        document.body.classList.remove('brainrot-mode');
     }
 
     // Add rainbow border around container

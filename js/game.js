@@ -37,6 +37,26 @@ class Game {
         // Try to load saved game state for this difficulty
         const savedState = StorageManager.loadGameState(this.difficulty);
         if (savedState && savedState.dayNumber === SequenceGenerator.getDayNumber()) {
+            // Check if game was already completed today
+            if (savedState.gameOver) {
+                this.loadCompletedState(savedState);
+                this.render();
+                this.setupEventListeners();
+                // Show the results modal
+                const time = this.timer.formatTime(savedState.elapsedSeconds);
+                this.uiRenderer.showGameOverModal(
+                    savedState.won,
+                    savedState.attempts,
+                    time,
+                    this.hiddenSequence,
+                    savedState.dayNumber,
+                    this.difficulty,
+                    this.theme,
+                    savedState.bestScore
+                );
+                return;
+            }
+            // Load in-progress game
             this.loadState(savedState);
         }
 
@@ -55,12 +75,14 @@ class Game {
     }
 
     placeInSlot(slotIndex, number) {
+        if (this.gameOver) return; // Prevent interaction if game is over
         this.platformSlots[slotIndex] = number;
         this.render();
         this.saveState();
     }
 
     removeFromSlot(slotIndex) {
+        if (this.gameOver) return; // Prevent interaction if game is over
         this.platformSlots[slotIndex] = null;
         this.render();
         this.saveState();
@@ -161,6 +183,9 @@ class Game {
         const dayNumber = SequenceGenerator.getDayNumber();
         this.statistics.updateStats(won, this.attempts, dayNumber);
 
+        // Save completed game state
+        this.saveCompletedState(won);
+
         // Show game over modal
         const time = this.timer.formatTime(this.timer.getElapsedSeconds());
         this.uiRenderer.showGameOverModal(
@@ -168,18 +193,20 @@ class Game {
             this.attempts,
             time,
             this.hiddenSequence,
-            dayNumber
+            dayNumber,
+            this.difficulty,
+            this.theme,
+            this.bestScore
         );
-
-        // Clear saved state for this difficulty
-        StorageManager.clearGameState(this.difficulty);
     }
 
     changeDifficulty(newDifficulty) {
         if (this.difficulty === newDifficulty) return;
 
-        // Save current state before switching
-        this.saveState();
+        // Save current state before switching (only if not game over)
+        if (!this.gameOver) {
+            this.saveState();
+        }
 
         // Reset game for new difficulty
         this.difficulty = newDifficulty;
@@ -197,7 +224,26 @@ class Game {
         // Try to load saved state for new difficulty
         const savedState = StorageManager.loadGameState(newDifficulty);
         if (savedState && savedState.dayNumber === SequenceGenerator.getDayNumber()) {
-            this.loadState(savedState);
+            // Check if game was already completed for this difficulty today
+            if (savedState.gameOver) {
+                this.loadCompletedState(savedState);
+                this.render();
+                // Show the results modal
+                const time = this.timer.formatTime(savedState.elapsedSeconds);
+                this.uiRenderer.showGameOverModal(
+                    savedState.won,
+                    savedState.attempts,
+                    time,
+                    this.hiddenSequence,
+                    savedState.dayNumber,
+                    this.difficulty,
+                    this.theme,
+                    savedState.bestScore
+                );
+            } else {
+                // Load in-progress game
+                this.loadState(savedState);
+            }
         }
 
         // Update UI - set toggle
@@ -278,7 +324,23 @@ class Game {
             attempts: this.attempts,
             guessHistory: this.guessHistory,
             bestScore: this.bestScore,
-            elapsedSeconds: this.timer.getElapsedSeconds()
+            elapsedSeconds: this.timer.getElapsedSeconds(),
+            gameOver: false
+        };
+
+        StorageManager.saveGameState(this.difficulty, state);
+    }
+
+    saveCompletedState(won) {
+        const state = {
+            dayNumber: SequenceGenerator.getDayNumber(),
+            platformSlots: this.platformSlots,
+            attempts: this.attempts,
+            guessHistory: this.guessHistory,
+            bestScore: this.bestScore,
+            elapsedSeconds: this.timer.getElapsedSeconds(),
+            gameOver: true,
+            won: won
         };
 
         StorageManager.saveGameState(this.difficulty, state);
@@ -290,6 +352,20 @@ class Game {
         this.guessHistory = state.guessHistory || [];
         this.bestScore = state.bestScore || 0;
         this.timer.loadState(state.elapsedSeconds);
+
+        if (this.guessHistory.length > 0 && this.difficulty !== 'hard') {
+            this.uiRenderer.showHistory();
+        }
+    }
+
+    loadCompletedState(state) {
+        this.gameOver = true;
+        this.platformSlots = state.platformSlots || [null, null, null, null, null];
+        this.attempts = state.attempts || 0;
+        this.guessHistory = state.guessHistory || [];
+        this.bestScore = state.bestScore || 0;
+        this.timer.loadState(state.elapsedSeconds);
+        document.getElementById('submit-btn').disabled = true;
 
         if (this.guessHistory.length > 0 && this.difficulty !== 'hard') {
             this.uiRenderer.showHistory();

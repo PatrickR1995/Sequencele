@@ -227,7 +227,7 @@ class UIRenderer {
         return ghost;
     }
 
-    showGameOverModal(won, attempts, time, hiddenSequence, dayNumber) {
+    showGameOverModal(won, attempts, time, hiddenSequence, dayNumber, difficulty, theme, bestScore) {
         const modal = document.createElement('div');
         modal.className = 'modal-overlay';
 
@@ -238,17 +238,91 @@ class UIRenderer {
         const winIcon = '<i class="fas fa-trophy"></i>';
         const loseIcon = '<i class="fas fa-times-circle"></i>';
 
+        // Get theme display name
+        const themeName = CONFIG.THEMES[theme]?.name || theme;
+
+        // Format difficulty with capital first letter
+        const difficultyDisplay = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
+        // Get difficulty icon
+        const difficultyIcons = {
+            easy: '<i class="fas fa-smile"></i>',
+            normal: '<i class="fas fa-meh"></i>',
+            hard: '<i class="fas fa-skull"></i>'
+        };
+        const difficultyIcon = difficultyIcons[difficulty] || '<i class="fas fa-gamepad"></i>';
+
+        // Theme icon
+        const themeIcons = {
+            number: '<i class="fas fa-hashtag"></i>',
+            color: '<i class="fas fa-palette"></i>',
+            brainrot: '<i class="fas fa-fire"></i>'
+        };
+        const themeIcon = themeIcons[theme] || '<i class="fas fa-gamepad"></i>';
+
+        // Calculate accuracy percentage
+        const accuracy = Math.round((bestScore / CONFIG.SEQUENCE_LENGTH) * 100);
+
+        // Get performance rating
+        let performanceRating;
+        let performanceEmoji;
+        if (won) {
+            if (attempts === 1) {
+                performanceRating = 'PERFECT!';
+                performanceEmoji = '<i class="fas fa-trophy"></i>';
+            } else if (attempts <= 3) {
+                performanceRating = 'Excellent!';
+                performanceEmoji = '<i class="fas fa-star"></i>';
+            } else if (attempts <= 6) {
+                performanceRating = 'Great!';
+                performanceEmoji = '<i class="fas fa-thumbs-up"></i>';
+            } else if (attempts <= 9) {
+                performanceRating = 'Good!';
+                performanceEmoji = '<i class="fas fa-smile"></i>';
+            } else {
+                performanceRating = 'Close one!';
+                performanceEmoji = '<i class="fas fa-grin-squint"></i>';
+            }
+        } else {
+            performanceRating = 'Better luck next time!';
+            performanceEmoji = '<i class="fas fa-gamepad"></i>';
+        }
+
+        // Get current streak
+        const stats = this.game.statistics.stats;
+        const currentStreak = stats.currentStreak;
+
         modal.innerHTML = `
             <div class="modal-content">
+                <button class="modal-close-btn" id="close-game-over-btn">
+                    <i class="fas fa-times"></i>
+                </button>
                 <div class="game-over">
                     <div class="game-over-title ${won ? 'win' : 'lose'}">
                         ${won ? winIcon + ' You Won!' : loseIcon + ' Game Over'}
                     </div>
+                    ${won ? `<div class="performance-rating">${performanceEmoji} ${performanceRating}</div>` : ''}
                     <div class="game-over-stats">
+                        <div class="stat-row">
+                            <span class="stat-label">${difficultyIcon} Difficulty:</span>
+                            <span class="stat-value">${difficultyDisplay}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">${themeIcon} Theme:</span>
+                            <span class="stat-value">${themeName}</span>
+                        </div>
                         <div class="stat-row">
                             <span class="stat-label"><i class="fas fa-crosshairs"></i> Attempts:</span>
                             <span class="stat-value">${attempts}/${CONFIG.MAX_ATTEMPTS}</span>
                         </div>
+                        <div class="stat-row">
+                            <span class="stat-label"><i class="fas fa-star"></i> Best Score:</span>
+                            <span class="stat-value">${bestScore}/${CONFIG.SEQUENCE_LENGTH} (${accuracy}%)</span>
+                        </div>
+                        ${won && currentStreak > 0 ? `<div class="stat-row streak-highlight">
+                            <span class="stat-label"><i class="fas fa-fire"></i> Current Streak:</span>
+                            <span class="stat-value">${currentStreak} <i class="fas fa-fire"></i></span>
+                        </div>` : ''}
                         <div class="stat-row">
                             <span class="stat-label"><i class="fas fa-clock"></i> Time:</span>
                             <span class="stat-value">${time}</span>
@@ -257,7 +331,7 @@ class UIRenderer {
                             <span class="stat-label"><i class="fas fa-calendar-day"></i> Date:</span>
                             <span class="stat-value">${SequenceGenerator.getTodayString()}</span>
                         </div>
-                        ${!won ? `<div class="stat-row">
+                        ${!won ? `<div class="stat-row answer-reveal">
                             <span class="stat-label"><i class="fas fa-key"></i> Answer:</span>
                             <span class="stat-value">${sequenceDisplay}</span>
                         </div>` : ''}
@@ -273,16 +347,34 @@ class UIRenderer {
         container.innerHTML = '';
         container.appendChild(modal);
 
+        // Add close button handler
+        document.getElementById('close-game-over-btn').onclick = () => {
+            this.closeGameOverModal();
+        };
+
         // Add share button handler
         document.getElementById('share-results-btn').onclick = () => {
-            this.shareResults(dayNumber, attempts, time);
+            this.shareResults(dayNumber, attempts, time, difficulty, theme, bestScore);
         };
     }
 
-    shareResults(dayNumber, attempts, time) {
+    closeGameOverModal() {
+        const container = document.getElementById('game-over-modal-container');
+        container.innerHTML = '';
+    }
+
+    shareResults(dayNumber, attempts, time, difficulty, theme, bestScore) {
+        // Get theme display name
+        const themeName = CONFIG.THEMES[theme]?.name || theme;
+
+        // Format difficulty with capital first letter
+        const difficultyDisplay = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
         const shareText = `Sequencele #${dayNumber}
 
+${difficultyDisplay} - ${themeName}
 Attempts: ${attempts}/${CONFIG.MAX_ATTEMPTS}
+Best Score: ${bestScore}/${CONFIG.SEQUENCE_LENGTH}
 Time: ${time}
 
 ${CONFIG.SHARE_URL}`;
@@ -326,7 +418,7 @@ ${CONFIG.SHARE_URL}`;
 
             const msg = document.createElement('div');
             msg.className = 'share-message';
-            msg.textContent = '✓ Results copied to clipboard!';
+            msg.innerHTML = '<i class="fas fa-check"></i> Results copied to clipboard!';
             modal.appendChild(msg);
             setTimeout(() => msg.remove(), 3000);
         }

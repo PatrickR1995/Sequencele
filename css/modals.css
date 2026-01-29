@@ -34,6 +34,31 @@
     transition: background 0.3s ease;
 }
 
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-close-btn:hover {
+    background: var(--info-bg);
+    color: var(--text-color);
+    transform: rotate(90deg);
+}
+
 @keyframes slideUp {
     from {
         transform: translateY(50px);
@@ -235,6 +260,29 @@
     color: #f44336;
 }
 
+.performance-rating {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 25px;
+    display: inline-block;
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.8);
+        transform: scale(1.02);
+    }
+}
+
 .game-over-stats {
     margin: 20px 0;
     padding: 20px;
@@ -259,6 +307,42 @@
     font-weight: 600;
     color: var(--text-color);
     transition: color 0.3s ease;
+}
+
+.stat-row.streak-highlight {
+    background: linear-gradient(90deg, rgba(255, 138, 0, 0.1) 0%, rgba(255, 69, 0, 0.1) 100%);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #ff8c00;
+    animation: streak-pulse 2s ease-in-out infinite;
+}
+
+@keyframes streak-pulse {
+    0%, 100% {
+        border-left-color: #ff8c00;
+    }
+    50% {
+        border-left-color: #ff4500;
+    }
+}
+
+.stat-row.streak-highlight .stat-value {
+    color: #ff8c00;
+    font-weight: 700;
+}
+
+.stat-row.answer-reveal {
+    background: rgba(244, 67, 54, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 4px solid #f44336;
+    font-family: monospace;
+}
+
+.stat-row.answer-reveal .stat-value {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 2px;
 }
 
 .share-btn {

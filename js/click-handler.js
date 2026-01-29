@@ -24,6 +24,7 @@ class ClickHandler {
         const tile = e.target.closest('.number-tile');
         if (!tile) return;
         if (tile.classList.contains('used')) return;
+        if (this.game.gameOver) return; // Prevent interaction if game is over
 
         this.game.startTimer();
 
@@ -41,6 +42,7 @@ class ClickHandler {
         const tile = e.target.closest('.number-tile');
         if (!tile) return;
         if (tile.classList.contains('used')) return;
+        if (this.game.gameOver) return; // Prevent interaction if game is over
 
         // Prevent the click event from also firing
         e.preventDefault();
