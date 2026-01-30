@@ -117,6 +117,15 @@
     transition: color 0.3s ease;
 }
 
+.splash-description {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    text-align: center;
+    margin: 20px 0 30px 0;
+    max-width: 450px;
+}
+
 .splash-note {
     font-size: 14px;
     color: var(--text-tertiary);
@@ -144,6 +153,85 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Splash Screen Mobile - Full screen up to 768px */
+@media (max-width: 768px) {
+    .splash-screen {
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .splash-content {
+        border-radius: 0;
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 20px;
+        box-shadow: none;
+        text-align: center;
+    }
+
+    .splash-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .splash-title {
+        font-size: 36px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .splash-description {
+        font-size: 15px;
+        margin: 15px auto 25px auto;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .play-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 16px 30px;
+        font-size: 18px;
+        margin-top: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .splash-content {
+        padding: 20px 20px;
+    }
+
+    .splash-title {
+        font-size: 32px;
+    }
+
+    .splash-icon {
+        font-size: 48px !important;
+    }
+
+    .splash-description {
+        font-size: 14px;
+    }
+
+    .play-btn {
+        max-width: 280px;
+        padding: 14px 25px;
+        font-size: 16px;
+    }
+}
+
 /* Statistics Modal */
 .modal-header {
     display: flex;
@@ -156,6 +244,128 @@
     margin: 0;
     color: var(--text-color);
     transition: color 0.3s ease;
+}
+
+/* Help Modal */
+.help-modal-content {
+    max-width: 500px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.help-content {
+    color: var(--text-color);
+}
+
+.help-section {
+    margin-bottom: 12px;
+}
+
+.help-section-header {
+    background: var(--info-bg);
+    padding: 15px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    user-select: none;
+}
+
+.help-section-header:hover {
+    background: var(--border-color);
+}
+
+.help-section-header > i:first-child {
+    font-size: 20px;
+    color: #667eea;
+    flex-shrink: 0;
+}
+
+.help-section-header h3 {
+    flex: 1;
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.help-chevron {
+    font-size: 14px !important;
+    color: var(--text-secondary) !important;
+    transition: transform 0.3s ease;
+}
+
+.help-section-header.active .help-chevron {
+    transform: rotate(180deg);
+}
+
+.help-section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 20px;
+}
+
+.help-section-content.expanded {
+    max-height: 500px;
+    padding: 15px 20px;
+}
+
+.help-section-content p {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.help-section-content p:last-child {
+    margin-bottom: 0;
+}
+
+.help-section-content strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.help-note {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-left: 4px solid #667eea;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.help-note i {
+    font-size: 20px;
+    color: #667eea;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.help-note p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+}
+
+.help-note strong {
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .help-modal-content {
+        padding: 30px 20px;
+        max-height: 90vh;
+    }
 }
 
 .close-btn {
@@ -453,62 +663,4 @@
 
 .play-btn:active {
     transform: translateY(-1px);
-}
-
-/* Responsive Splash */
-@media (max-width: 600px) {
-    .splash-title {
-        font-size: 36px;
-    }
-
-    .splash-icon {
-        font-size: 48px;
-    }
-
-    .instruction-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .splash-content {
-        padding: 30px 20px;
-        /* make the content area scrollable and constrained so the Play button is reachable */
-        max-height: calc(100svh - 80px);
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-        box-sizing: border-box;
-        width: min(95%, 500px);
-
-        /* Center the card inside the scrollable overlay */
-        margin: auto;
-    }
-
-    /* Make the full-screen overlay allow scrolling so content can move into view */
-    .splash-screen {
-        /* keep centering behavior even on mobile */
-        align-items: center;
-        justify-content: center;
-
-        /* allow scroll only when needed */
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-        padding: 24px 16px;
-        box-sizing: border-box;
-    }
-
-    /* Ensure content doesn't hug the top when taller than the viewport */
-    .splash-screen::before,
-    .splash-screen::after {
-        content: "";
-        display: block;
-        height: 0;
-        flex: 0 0 auto;
-    }
-
-    /* Ensure the play button isn't pushed offscreen and is easily tappable */
-    .play-btn {
-        width: auto;
-        padding: 14px 36px;
-        font-size: 18px;
-    }
 }

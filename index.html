@@ -16,6 +16,9 @@
     <div class="header-row">
         <h1 class="game-title">Sequencele</h1>
         <div class="header-buttons">
+            <button class="icon-btn" id="help-btn" title="How to Play">
+                <i class="fas fa-question-circle"></i>
+            </button>
             <button class="icon-btn" id="stats-btn" title="Statistics">
                 <i class="fas fa-chart-bar"></i>
             </button>
@@ -115,27 +118,8 @@
             <h1 class="splash-title">Sequencele</h1>
         </div>
         <div class="splash-instructions">
-            <h2>How to Play</h2>
-            <div class="instruction-grid">
-                <div class="instruction-item">
-                    <i class="fas fa-bullseye"></i>
-                    <p>Find the hidden sequence of 5 items</p>
-                </div>
-                <div class="instruction-item">
-                    <i class="fas fa-hand-pointer"></i>
-                    <p>Click items to place them in order</p>
-                </div>
-                <div class="instruction-item">
-                    <i class="fas fa-chart-line"></i>
-                    <p>Get feedback after each guess</p>
-                </div>
-                <div class="instruction-item">
-                    <i class="fas fa-stopwatch"></i>
-                    <p>Beat your best time!</p>
-                </div>
-            </div>
-            <p class="splash-note">
-                <i class="fas fa-calendar-day"></i> New puzzle every day • 12 attempts
+            <p class="splash-description">
+                Find the hidden sequence of 5 items. Click to place them in order and get feedback after each guess. You have 12 attempts!
             </p>
         </div>
         <button class="play-btn" id="play-btn">
@@ -174,6 +158,62 @@
         <div class="guess-distribution">
             <h3>Guess Distribution</h3>
             <div id="distribution-bars"></div>
+        </div>
+    </div>
+</div>
+
+<!-- How to Play Modal -->
+<div class="modal-overlay" id="help-modal" style="display: none;">
+    <div class="modal-content help-modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-question-circle"></i> How to Play</h2>
+            <button class="close-btn" id="close-help">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="help-content">
+            <div class="help-section">
+                <div class="help-section-header" data-section="objective">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Objective</h3>
+                    <i class="fas fa-chevron-down help-chevron"></i>
+                </div>
+                <div class="help-section-content expanded" data-content="objective">
+                    <p>Discover the hidden sequence of 5 items in the correct order within 12 attempts.</p>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <div class="help-section-header" data-section="how-to">
+                    <i class="fas fa-hand-pointer"></i>
+                    <h3>How to Play</h3>
+                    <i class="fas fa-chevron-down help-chevron"></i>
+                </div>
+                <div class="help-section-content expanded" data-content="how-to">
+                    <p><strong>1.</strong> Click items from the available pool to place them in guess slots</p>
+                    <p><strong>2.</strong> Click a filled slot to remove an item</p>
+                    <p><strong>3.</strong> Submit your guess when all 5 slots are filled</p>
+                    <p><strong>4.</strong> See how many items are in correct positions</p>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <div class="help-section-header" data-section="modes">
+                    <i class="fas fa-cog"></i>
+                    <h3>Game Modes</h3>
+                    <i class="fas fa-chevron-down help-chevron"></i>
+                </div>
+                <div class="help-section-content" data-content="modes">
+                    <p><strong>Normal Mode:</strong> Get feedback on total correct items</p>
+                    <p><strong>Hard Mode:</strong> Less specific feedback - more challenging!</p>
+                    <p><strong>Brainrot Theme:</strong> Play with fun images instead of numbers</p>
+                </div>
+            </div>
+
+            <div class="help-note">
+                <i class="fas fa-info-circle"></i>
+                <p>New puzzle available daily! Try to beat your best time and score.</p>
+            </div>
         </div>
     </div>
 </div>

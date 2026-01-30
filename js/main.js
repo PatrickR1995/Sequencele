@@ -89,4 +89,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Help button
+    document.getElementById('help-btn').addEventListener('click', () => {
+        document.getElementById('help-modal').style.display = 'flex';
+        // Expand first two sections by default
+        document.querySelectorAll('.help-section-header').forEach((header, index) => {
+            if (index < 2) {
+                header.classList.add('active');
+            }
+        });
+    });
+
+    // Close help modal
+    document.getElementById('close-help').addEventListener('click', () => {
+        document.getElementById('help-modal').style.display = 'none';
+    });
+
+    // Close help modal when clicking outside
+    document.getElementById('help-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'help-modal') {
+            document.getElementById('help-modal').style.display = 'none';
+        }
+    });
+
+    // Collapsible help sections
+    document.querySelectorAll('.help-section-header').forEach(header => {
+        header.addEventListener('click', () => {
+            const section = header.dataset.section;
+            const content = document.querySelector(`.help-section-content[data-content="${section}"]`);
+
+            // Toggle active state
+            header.classList.toggle('active');
+            content.classList.toggle('expanded');
+        });
+    });
 });
